@@ -1,0 +1,83 @@
+SEC_GEN_DORM
+    
+    Create a map for the "dormitories"
+    dorms are made of large (5x tall) horizontal hallways connected by smaller (3x wide) vertical hallways in a grid
+        with small (3x3) rooms joined to the small hallways. example:
+
+    =====...=========...=========...=========...=========...=========...=====
+    .........................................................................
+    .........................................................................
+    .........................................................................
+    .........................................................................
+    .........................................................................
+    =====...=========...=========...=========...=========...=========...=====
+    =...=...=...=...=...=...=...=...=...=...=...=...=...=...=...=...=...=...=
+    =...X...X...=...X...X...=...X...X...=...X...X...=...X...X...=...X...X...=
+    =...=...=...=...=...=...=...=...=...=...=...=...=...=...=...=...=...=...=
+    =====...=========...=========...=========...=========...=========...=====
+    =...=...=...=...=...=...=...=...=...=...=...=...=...=...=...=...=...=...=
+    =...X...X...=...X...X...=...X...X...=...X...X...=...X...X...=...X...X...=
+    =...=...=...=...=...=...=...=...=...=...=...=...=...=...=...=...=...=...=
+    =====...=========...=========...=========...=========...=========...=====
+    =...=...=...=...=...=...=...=...=...=...=...=...=...=...=...=...=...=...=
+    =...X...X...=...X...X...=...X...X...=...X...X...=...X...X...=...X...X...=
+    =...=...=...=...=...=...=...=...=...=...=...=...=...=...=...=...=...=...=
+    =====...=========...=========...=========...=========...=========...=====
+    =...=...=...=...=...=...=...=...=...=...=...=...=...=...=...=...=...=...=
+    =...X...X...=...X...X...=...X...X...=...X...X...=...X...X...=...X...X...=
+    =...=...=...=...=...=...=...=...=...=...=...=...=...=...=...=...=...=...=
+    =====...=========...=========...=========...=========...=========...=====
+    =...=...=...=...=...=...=...=...=...=...=...=...=...=...=...=...=...=...=
+    =...X...X...=...X...X...=...X...X...=...X...X...=...X...X...=...X...X...=
+    =...=...=...=...=...=...=...=...=...=...=...=...=...=...=...=...=...=...=
+    =====...=========...=========...=========...=========...=========...=====
+    .........................................................................
+    .........................................................................
+    .........................................................................
+    .........................................................................
+    .........................................................................
+    =====...=========...=========...=========...=========...=========...=====
+
+    As many walls are shared as possible; the map's width depends on the number of small halls (#sh) 
+        and its height depends on the number of large halls (#lh)
+
+    so the width and height are :
+    map width = #sh * 12 + 1
+    map height = (#lh - 1) * 26 + 6
+
+    sometimes a section of rooms are removed in place of a large room, including:
+    - the "kitchen"
+    - the "utility room"
+    - the "stairwell"
+
+    so, the order of room creation is:
+    - create all large halls, bordered by walls
+    - create the aux rooms in a way that doesn't collide with large halls
+    - connect the aux rooms to the closest large hall with thin halls
+    - fill in small halls where they don't collide with aux rooms; connect to large halls
+    - fill in rooms where they don't collide with aux rooms; place doors to small halls
+
+SEC_TILE_ACTS
+
+    Tile Actions are functions that trigger when the player "acts" on a specific tile.
+    They're organized by serialized id, so all instances of an actionable tile perform the same action, 
+        and each tile only has one action.
+    A Tile Action takes as arguments a map and an x and y coordinate. This allows tiles to be replaced by reference.
+    Tile Actions are stored in an Object ID -> Function dictionary.
+    Actionable tiles have a boolean indicating such, for speed reasons.
+
+    Tile Actions, organized by actionable tile-
+
+    Closed Door
+        Replaces the actioned tile with an Open Doorway tile
+
+    Open Doorway
+        Replaces the actioned tile with a Closed Door tile
+
+SEC_LOG_FORM
+
+    The log format is by default WYSIWYG text, but has some further features-
+
+    Color-
+        the default text color is white, but sections of text can be colored by injecting a hex color code into the text.
+        example: "white text #FF0000red text #0000FFblue text #FF00FFpurple text"
