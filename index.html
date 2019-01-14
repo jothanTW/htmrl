@@ -1,17 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="utf-8"/>
     <head>
-        <link rel="stylesheet" type="text/css" href="css/positions.css"></link>
+        <meta charset="utf-8"/>
+        <link rel="stylesheet" type="text/css" href="css/positions.css">
     </head>
     <body onresize="onResize()" onkeydown="onKeyDown(event)" onkeyup="onKeyUp(event)">
-        <div class="rl-map-box">
-            <canvas id="rl-map" onmousemove="onMapMouseMove(event)"></canvas>
-            <canvas id="rl-menu"></canvasdiv>
+        <div class="touch-controls">
+            <div class="touch-button btn-up-left" onclick="moveUpLeft()" ontouchstart="onControlTouchStart(event)" ontouchend="
+            onControlTouchEnd(event)"></div>
+            <div class="touch-button btn-up" onclick="moveUp()" ontouchstart="onControlTouchStart(event)" ontouchend="
+            onControlTouchEnd(event)"></div>
+            <div class="touch-button btn-up-right" onclick="moveUpRight()" ontouchstart="onControlTouchStart(event)" ontouchend="
+            onControlTouchEnd(event)"></div>
+            <div class="touch-button btn-left" onclick="moveLeft()" ontouchstart="onControlTouchStart(event)" ontouchend="
+            onControlTouchEnd(event)"></div>
+            <div class="touch-button btn-center"></div>
+            <div class="touch-button btn-right" onclick="moveRight()" ontouchstart="onControlTouchStart(event)" ontouchend="
+            onControlTouchEnd(event)"></div>
+            <div class="touch-button btn-down-left" onclick="moveDownLeft()" ontouchstart="onControlTouchStart(event)" ontouchend="
+            onControlTouchEnd(event)"></div>
+            <div class="touch-button btn-down" onclick="moveDown()" ontouchstart="onControlTouchStart(event)" ontouchend="
+            onControlTouchEnd(event)"></div>
+            <div class="touch-button btn-down-right" onclick="moveDownRight()" ontouchstart="onControlTouchStart(event)" ontouchend="
+            onControlTouchEnd(event)"></div>
         </div>
-        <canvas id="rl-text-log"></canvas>
-        <canvas id="rl-text-box"></canvas>
+        <div class="main-view">
+            <div class="rl-map-box">
+                <canvas id="rl-map" onmousemove="onMapMouseMove(event)"></canvas>
+                <canvas id="rl-menu"></canvas>
+            </div>
+            <canvas id="rl-text-log"></canvas>
+            <canvas id="rl-text-box"></canvas>
+        </div>
     </body>
     <script src="js/rl.js"></script>
 </html>

@@ -2,10 +2,18 @@ body {
     height: 100vh; 
     max-height: 100vh;
     display: flex;
-    flex-direction: column;
+    
     margin: 0;  
     max-width: 100vw;
+    background-color: black;
+
 }   
+
+.main-view {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
 
 .rl-map-box {
     display: flex;
@@ -48,4 +56,142 @@ canvas {
     height: 80px;
     width: 100%;
     flex-shrink: 0;
+}
+
+.touch-controls {
+    background-color: black;
+    display: none;
+    position: relative;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #F8F8F8;
+    border-radius: 3px;
+}
+
+.touch-button {
+    position: absolute;
+    background-color: black;
+    border: 2px solid #F8F8F8;
+    border-radius: 5px;
+    width: 25%;
+    height: 25%;
+}
+
+.touch-button::after {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background:url("../img/arrow-up.svg") center center no-repeat;
+}
+
+.btn-up-left {
+    top: 10%;
+    left: 10%;
+}
+
+.btn-up {
+    top: 10%;
+    left: 37.5%
+}
+
+.btn-up-right {
+    top: 10%;
+    left: 65%;
+}
+
+.btn-left {
+    top: 37.5%;
+    left: 10%;
+}
+
+.btn-center {
+    top: 37.5%;
+    left: 37.5%;
+}
+
+.btn-right {
+    top: 37.5%;
+    left: 65%;
+}
+
+.btn-down-left {
+    top: 65%;
+    left: 10%;
+}
+
+.btn-down {
+    top: 65%;
+    left: 37.5%;
+}
+
+.btn-down-right {
+    top: 65%;
+    left: 65%;
+}
+
+.btn-up-left::after {
+    transform: rotate(315deg);
+}
+
+.btn-up-right::after {
+    transform: rotate(45deg);
+}
+
+.btn-left::after {
+    transform: rotate(270deg);
+}
+
+.btn-center::after {
+    background: none;
+}
+
+.btn-right::after {
+    transform: rotate(90deg);
+}
+
+.btn-down-left::after {
+    transform: rotate(225deg);
+}
+
+.btn-down::after {
+    transform: rotate(180deg);
+}
+
+.btn-down-right::after {
+    transform: rotate(135deg);
+}
+
+
+/* touchscreen controls */
+@media(hover:none) {
+    .touch-controls {
+        display: flex;
+    }
+}
+
+@media screen and (orientation:landscape) {
+    .touch-controls {
+        height: 100vh;
+        width: 100vh;
+        max-width: 25%;
+        margin-top: auto;
+        margin-bottom: auto;
+    }
+}
+
+@media screen and (orientation:portrait) {
+    .touch-controls {
+        height: 100vw;
+        width: 100vw;
+        max-height: 25%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    body {
+       flex-direction: column-reverse; 
+    }
 }

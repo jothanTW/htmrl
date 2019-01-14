@@ -327,6 +327,9 @@ var keystates = {};
 var keyIntervals = {};
 var hardIgnoreKeys = ["Alt", "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12"];
 
+var touchIntervals = {};
+
+
 // canvas context setup
 function getCtx(canv) {
     var ctx = canv.getContext("2d");
@@ -450,7 +453,28 @@ function onMouseDown(e) {
 }
 
 function onTouch(e) {
+    console.log(e);
+}
 
+
+/*
+    So here's sort of a hack
+    on any element using these event handlers, holding them down on a touch screen engages their own click event
+        similar to holding the corresponding button
+*/
+function onControlTouchStart(e) {
+    e.preventDefault();
+    if (!touchIntervals[e.srcElement]) {
+        touchIntervals[e.srcElement] = window.setInterval(function() {e.srcElement.onclick.apply(e.srcElement)}, keydowntime);
+    }
+}
+
+function onControlTouchEnd(e) {
+    if (touchIntervals[e.srcElement]) {
+        e.srcElement.onclick.apply(e.srcElement);
+        clearInterval(touchIntervals[e.srcElement]);
+        touchIntervals[e.srcElement] = null;
+    }
 }
 
 // interval function for when a key is down. handles specific key code. many times, clears its own interval.
@@ -857,8 +881,6 @@ function getDormMap() {
         }
         dormmap.setTile(rmx + 1, rmy - 1, doorTileClosed);
         dormmap.lights.push(new LightSource(rmx + 1, rmy - 2, 5, {r: 255, g: 0, b: 0}, 1000));
-        player.x = rmx; 
-        player.y = rmy - 5;
     } else {
         rmy = 28 + lgh * 26 - rmh;
         for (var rmi = rmx - 1; rmi < rmx + rmw + 1; rmi++) {
@@ -933,8 +955,8 @@ function getDormMap() {
     }
 
     var selectedroom =getRandomInt(roomcenters.length);
-    //player.x = roomcenters[selectedroom].x;
-    //player.y = roomcenters[selectedroom].y;
+    player.x = roomcenters[selectedroom].x;
+    player.y = roomcenters[selectedroom].y;
 
     dormmap.lights.push(new LightSource(player.x, player.y, 5));
 
