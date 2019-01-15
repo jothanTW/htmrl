@@ -184,7 +184,7 @@ function Map(w, h) {
         // draw the color overlay
         var cl = this.coloroverlay[x + y * this.width];
         //console.log(cl);
-        ctx.fillStyle = "rgb(" + cl.r + ", " + cl.g + ", " + cl.b + ", " + 0.5 + ")";
+        ctx.fillStyle = "rgba(" + cl.r + ", " + cl.g + ", " + cl.b + ", " + 0.5 + ")";
         ctx.fillRect(fontsize * tx + fontoffsetx + backoffsetx, fontsize * ty + fontoffsety + backoffsety, fontsize, fontsize);
     }
 
