@@ -67,18 +67,46 @@ canvas {
     align-items: center;
     border: 1px solid #F8F8F8;
     border-radius: 3px;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.touch-direction {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    flex-grow: 1;
+    flex-basis: 0;
+}
+
+.touch-action {
+    display: flex;
+    flex-grow: 0;
+    flex-basis: 20%;
+}
+
+.touch-action>div {
+    display: flex;
+    flex-grow: 1;
+    flex-basis: 0;
+    min-width: 20px;
+    min-height: 20px;
 }
 
 .touch-button {
-    position: absolute;
+    position: relative;
+    margin: 5px;
     background-color: black;
     border: 2px solid #F8F8F8;
     border-radius: 5px;
-    width: 25%;
-    height: 25%;
 }
 
-.touch-button::after {
+.touch-direction>.touch-button {
+    min-width: 25%;
+    min-height: 25%;
+}
+
+.touch-direction .touch-button::after {
     content: "";
     display: block;
     position: absolute;
@@ -86,10 +114,8 @@ canvas {
     height: 100%;
     background:url("../img/arrow-up.svg") center center no-repeat;
 }
-
+/*
 .btn-up-left {
-    top: 10%;
-    left: 10%;
 }
 
 .btn-up {
@@ -131,7 +157,7 @@ canvas {
     top: 65%;
     left: 65%;
 }
-
+*/
 .btn-up-left::after {
     transform: rotate(315deg);
 }
@@ -179,6 +205,15 @@ canvas {
         max-width: 25%;
         margin-top: auto;
         margin-bottom: auto;
+        flex-direction: row;
+    }
+
+    .touch-controls>div {
+        height: 100%;
+    }
+
+    .touch-action {
+        flex-direction: column;
     }
 }
 
@@ -189,6 +224,16 @@ canvas {
         max-height: 25%;
         margin-left: auto;
         margin-right: auto;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .touch-controls>div {
+        width: 100%;
+    }
+
+    .touch-action {
+        flex-direction: row;
     }
 
     body {

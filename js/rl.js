@@ -465,13 +465,13 @@ function onTouch(e) {
 function onControlTouchStart(e) {
     e.preventDefault();
     if (!touchIntervals[e.srcElement]) {
+        e.srcElement.onclick.apply(e.srcElement);
         touchIntervals[e.srcElement] = window.setInterval(function() {e.srcElement.onclick.apply(e.srcElement)}, keydowntime);
     }
 }
 
 function onControlTouchEnd(e) {
     if (touchIntervals[e.srcElement]) {
-        e.srcElement.onclick.apply(e.srcElement);
         clearInterval(touchIntervals[e.srcElement]);
         touchIntervals[e.srcElement] = null;
     }
@@ -521,6 +521,9 @@ function whenKeyDown(k) {
         case "c":
             moveDownRight();
         break; 
+        case " ":
+        // pickup
+        break;
     }
 }
 
@@ -612,7 +615,7 @@ function onResize() {
     Since this function is lengthy, it's kept as a function instead of a method inside the map object
 */
 function updateLightMap(map) {
-    var raylength = 0.6; // must be positive; keep 1 or below; detail increases at this decreases
+    var raylength = 0.3; // must be positive; keep 1 or below; detail increases at this decreases
     var raydensity = 200; // density of rays, as #/per full circle. detail increases as this increases
 
     var rayangle = 2 * Math.PI / raydensity;
@@ -866,7 +869,7 @@ function getDormMap() {
         rmw = 3;
         rmh = getRandomInt(3) + 5;
         rmx = getRandomInt(mapWd - rmw - 2 - buffer - buffer) + buffer + 1;
-    } while (!dormmap.doesRectCollide(rmx, 7 + lgh * 26, rmw, 19));
+    } while (dormmap.doesRectCollide(rmx, buffer + 7 + lgh * 26, rmw, 19));
     console.log(lgh);
     if (getRandomInt(2)) { // choose if it's up or down
         rmy = 9 + lgh * 26;
