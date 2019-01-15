@@ -185,8 +185,7 @@ function Map(w, h) {
         var cl = this.coloroverlay[x + y * this.width];
         //console.log(cl);
         ctx.fillStyle = "rgba(" + cl.r + ", " + cl.g + ", " + cl.b + ", " + 0.5 + ")";
-        ctx.rect(fontsize * tx + fontoffsetx + backoffsetx, fontsize * ty + fontoffsety + backoffsety, fontsize, fontsize);
-        ctx.stroke();
+        //ctx.fillRect(fontsize * tx + fontoffsetx + backoffsetx, fontsize * ty + fontoffsety + backoffsety, fontsize, fontsize);
     }
 
     this.doesRectCollide = function(x, y, w, h) {
