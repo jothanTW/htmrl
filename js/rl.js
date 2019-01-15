@@ -185,12 +185,12 @@ function Map(w, h) {
         var cl = this.coloroverlay[x + y * this.width];
         //console.log(cl);
         ctx.fillStyle = "rgba(" + cl.r + ", " + cl.g + ", " + cl.b + ", " + 0.5 + ")";
-        ctx.fillRect(fontsize * tx + fontoffsetx + backoffsetx, fontsize * ty + fontoffsety + backoffsety, fontsize, fontsize);
+        ctx.rect(fontsize * tx + fontoffsetx + backoffsetx, fontsize * ty + fontoffsety + backoffsety, fontsize, fontsize);
+        ctx.stroke();
     }
 
     this.doesRectCollide = function(x, y, w, h) {
-        // take a rectangle as an argument, see if it collides with any tile that's not the empty tile
-
+        // take a rectangle as an argument, see if it collides with any tile that's not the empty
         for (var i = x; i < x + w; i++) {
             for (var j = y; j < y + h; j++) {
                 var t = this.getTile(i, j);
