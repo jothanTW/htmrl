@@ -354,6 +354,8 @@ var lightcanvas = document.getElementById("rl-light-map");
 var lightcanvasctx = getCtx(lightcanvas);
 lightcanvasctx.font = font;
 
+lightcanvasctx.globalAlpha = 0.5;
+
 // The text log
 var textlog = {
     logs: [], // array of log strings- see SEC_LOG_FORM for the scripting
