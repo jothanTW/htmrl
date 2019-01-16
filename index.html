@@ -32,7 +32,10 @@
         </div>
         <div class="main-view">
             <div class="rl-map-box">
-                <canvas id="rl-map" onmousemove="onMapMouseMove(event)"></canvas>
+                <div class="rl-map-layers">
+                    <canvas id="rl-map" onmousemove="onMapMouseMove(event)"></canvas>
+                    <canvas id="rl-light-map"></canvas>
+                </div>
                 <canvas id="rl-menu"></canvas>
             </div>
             <canvas id="rl-text-log"></canvas>

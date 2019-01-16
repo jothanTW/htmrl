@@ -9,7 +9,7 @@ const fonttype = "Courier New";
 const font = "bold " + fontsize + "px " + fonttype;
 const cycletime = 500;
 const keydowntime = 200;
-const framerate = 20;
+const framerate = 10;
 const framedelay = 1000 / framerate;
 
 // various utility functions
@@ -184,12 +184,13 @@ function Map(w, h) {
         // draw the color overlay
         var cl = this.coloroverlay[x + y * this.width];
         //console.log(cl);
-        ctx.fillStyle = "rgba(" + cl.r + ", " + cl.g + ", " + cl.b + ", " + 0.5 + ")";
-        //ctx.fillRect(fontsize * tx + fontoffsetx + backoffsetx, fontsize * ty + fontoffsety + backoffsety, fontsize, fontsize);
+        ctx.fillStyle = "rgba(" + cl.r + ", " + cl.g + ", " + cl.b + ", " + 1.0 + ")";
+        ctx.fillRect(fontsize * tx + fontoffsetx + backoffsetx, fontsize * ty + fontoffsety + backoffsety, fontsize, fontsize);
     }
 
     this.doesRectCollide = function(x, y, w, h) {
-        // take a rectangle as an argument, see if it collides with any tile that's not the empty
+        // take a rectangle as an argument, see if it collides with any tile that's not the empty tile
+
         for (var i = x; i < x + w; i++) {
             for (var j = y; j < y + h; j++) {
                 var t = this.getTile(i, j);
@@ -348,6 +349,10 @@ menucanvasctx.font = font;
 var logcanvas = document.getElementById("rl-text-log");
 var logcanvasctx = getCtx(logcanvas);
 logcanvasctx.font = font;
+
+var lightcanvas = document.getElementById("rl-light-map");
+var lightcanvasctx = getCtx(lightcanvas);
+lightcanvasctx.font = font;
 
 // The text log
 var textlog = {
@@ -586,6 +591,7 @@ function draw() {
     camY = player.y;
     // clear the screen
     mapcanvasctx.clearRect(0, 0, mapcanvas.width, mapcanvas.height);
+    lightcanvasctx.clearRect(0, 0, lightcanvas.width, lightcanvas.height);
 
     drawMapView(currentmap, camX, camY);
 }
@@ -600,10 +606,13 @@ function onResize() {
     menucanvas.height = menucanvas.offsetHeight;
     logcanvas.width  = logcanvas.offsetWidth;
     logcanvas.height = logcanvas.offsetHeight;
+    lightcanvas.width  = lightcanvas.offsetWidth;
+    lightcanvas.height = lightcanvas.offsetHeight;
     
     mapcanvasctx.font = font;
     menucanvasctx.font = font;
     logcanvasctx.font = font;
+    lightcanvasctx.font = font;
     
     textlog.draw();
 }
@@ -614,8 +623,8 @@ function onResize() {
     Since this function is lengthy, it's kept as a function instead of a method inside the map object
 */
 function updateLightMap(map) {
-    var raylength = 0.3; // must be positive; keep 1 or below; detail increases at this decreases
-    var raydensity = 200; // density of rays, as #/per full circle. detail increases as this increases
+    var raylength = 0.6; // must be positive; keep 1 or below; detail increases at this decreases
+    var raydensity = 100; // density of rays, as #/per full circle. detail increases as this increases
 
     var rayangle = 2 * Math.PI / raydensity;
 
@@ -703,6 +712,8 @@ function updateViewMap(map) {
     }
 }
 
+var debugtrigger = true;
+
 /* 
     This function takes a map and a camera and draws the resulting text to the map canvas
     The camera should be pointing at the center of the screen, unless it's too close to an edge
@@ -736,13 +747,17 @@ function drawMapView(map, tcamx, tcamy) {
                 (mx - 1 <= player.x && mx + 1 >= player.x &&
                  my - 1 <= player.y && my + 1 >= player.y)) {
                 map.drawAt(mapcanvasctx, mx, my, sx, sy);
-                map.drawOverlayAt(mapcanvasctx, mx, my, sx, sy);
+                map.drawOverlayAt(lightcanvasctx, mx, my, sx, sy);
                 map.seenmap[mx + my * map.width] = true;
+                if (debugtrigger) {
+                    console.log("reached");
+                    debugtrigger = false;
+                }
             } else if (map.seenmap[mx + my * map.width]) {
                 map.drawAt(mapcanvasctx, mx, my, sx, sy);
                 // draw a dark overlay
-                mapcanvasctx.fillStyle = "rgb(0, 0, 0, 0.7)";
-                mapcanvasctx.fillRect(fontsize * sx + fontoffsetx + backoffsetx, fontsize * sy + fontoffsety + backoffsety, fontsize, fontsize)
+                //lightcanvasctx.fillStyle = "rgba(0, 0, 0, 0.7)";
+                //lightcanvasctx.fillRect(fontsize * sx + fontoffsetx + backoffsetx, fontsize * sy + fontoffsety + backoffsety, fontsize, fontsize)
             }
         }
     }
